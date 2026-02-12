@@ -1,0 +1,62 @@
+# pandas 
+
+import pandas as pd
+
+# data inlezen
+
+df = pd.read_csv(
+    r"C:\Users\donna\OneDrive\Documenten\A Master jaar 1\Machine Learning\Week 1 python\datasets.csv"
+)
+print(df.head())
+
+# print number of data sets
+unique_datasets = df['dataset'].nunique()
+
+print(f"Aantal verschillende datasets: {unique_datasets}")
+
+# names of the data sets
+unique_datasets = df['dataset'].unique()
+
+print("Namen van de verschillende datasets:", unique_datasets)
+
+# statistics per dataset (x)
+
+statistics = df.groupby('dataset').agg(
+    count=('dataset', 'count'),
+    mean=('x', 'mean'),
+    variance=('x', 'var'),
+    std_dev=('x', 'std'),
+
+)
+print(statistics)
+
+# observations: de waardes liggen niet 
+# echt ver uitelkaar tussen de verschillende datasets. 
+#heb het wel alleen voor x gedaan
+
+# violin plots x
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 6))  # Bepaal de grootte van de plot
+
+sns.violinplot(data=df, x='dataset', y='x')  # x = dataset, y = x-coördinaten
+
+plt.title("Violin Plots of X-Coordinates per Dataset")
+plt.xlabel("Dataset")
+plt.ylabel("X-Coordinates")
+
+plt.show()
+
+# violin plots y
+
+plt.figure(figsize=(10, 6))  # Bepaal de grootte van de plot
+
+sns.violinplot(data=df, x='dataset', y='y')  # x = dataset, y = x-coördinaten
+
+plt.title("Violin Plots of y-Coordinates per Dataset")
+plt.xlabel("Dataset")
+plt.ylabel("Y-Coordinates")
+
+plt.show()
+
